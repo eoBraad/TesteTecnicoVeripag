@@ -1,0 +1,44 @@
+﻿services:
+  api:
+    build:
+      context: .
+      dockerfile: DockerFile
+    container_name: api
+    ports:
+      - "8080:8080"
+    depends_on:
+      - sqlserver
+      - redis
+    networks:
+      - app-network
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "Your_password123"
+    ports:
+      - "1433:1433"
+    networks:
+      - app-network
+    volumes:
+      - sql_data:/var/opt/mssql
+
+  redis:
+    image: redis:7
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - app-network
+    volumes:
+      - redis_data:/data
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  sql_data:
+  redis_data:
