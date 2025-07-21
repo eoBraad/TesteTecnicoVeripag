@@ -7,10 +7,10 @@ Esta aplicação fornece informações meteorológicas e histórico de buscas ut
 ## Tecnologias Utilizadas
 
 - **C#**
-- **ASP.NET Core**
-- **SQL Server** (armazenamento de dados)
-- **Docker** (containerização)
-- **xUnit** (testes unitários)
+- **ASP.NET Core**: Framework robusto e rapido, permite configuração e desenvolvimento agil.
+- **SQL Server** (armazenamento de dados): Banco de dados SQL robusto e feito para o uso empresarial, permite facil integração com dinversas tecnologias microsoft e também possui uma configuração simples.
+- **Docker** (containerização): Facilita a configuração e o compartilhamento do projeto
+- **Entity Framework**: ORM de alto nivel, facilitando o acesso aos dados e tratamento dos mesmos, contem diversas camadas de conversão de dados permitindo com que você trabalhe com fluides e velocidade.
 
 ## Coverage
 
