@@ -13,11 +13,14 @@ public class GetWeatherForecastService(GeoServiceClient geoServiceClient, OpenWe
 
     public async Task<OpenWeatherSimpleResponse?> GetWeatherAsync(string location, string apiKey)
     {
+        if (location == null)
+            throw new AppValidationException(["Location cannot be null"]);
+        
         var result = await _geoServiceClient.GetGeoDataAsync(location);
 
         if (result == null)
         {
-            throw new AppValidationException(["Location not found"]);
+            throw new AppNotFoundException(["Location not found"]);
         }
 
         var weather = await _openWeatherClient.GetWeatherAsync(float.Parse(result.Lat.Substring(0, 6).Replace(".", ",")),
@@ -25,7 +28,7 @@ public class GetWeatherForecastService(GeoServiceClient geoServiceClient, OpenWe
 
         if (weather == null)
         {
-            throw new AppValidationException(["Weather data not found"]);
+            throw new AppNotFoundException(["Weather data not found"]);
         }
 
         var response = new OpenWeatherSimpleResponse

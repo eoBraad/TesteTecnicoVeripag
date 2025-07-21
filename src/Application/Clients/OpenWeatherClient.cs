@@ -18,4 +18,14 @@ public class OpenWeatherClient(HttpClient httpClient, string apiKey)
         var options = new JsonSerializerOptions() { PropertyNameCaseInsensitive = true };
         return JsonSerializer.Deserialize<WeatherSimpleResult>(response, options);
     }
+    
+    public async Task<WeatherExtendedResult?> GetWeatherExtendedAsync(float lat, float lon, string exclude = "minutely")
+    {
+        var url = $"https://api.openweathermap.org/data/3.0/onecall?lat={lat.ToString(CultureInfo.InvariantCulture)}&lon={lon.ToString(CultureInfo.InvariantCulture)}&exclude={exclude}&appid={_apiKey}&units=metric&lang=pt_br";
+
+        var response = await _httpClient.GetStringAsync(url);
+        
+        var options = new JsonSerializerOptions() { PropertyNameCaseInsensitive = true };
+        return JsonSerializer.Deserialize<WeatherExtendedResult>(response, options);
+    }
 }
