@@ -1,1 +1,21 @@
+### Rota para criar uma nova chave de API
+POST http://localhost:5150/api/key?key={your_key_here}
+Accept: application/json
 
+###
+
+### Rota para obter o histórico de buscas
+GET http://localhost:5150/api/searchhistory?apikey={your_key_here}
+Accept: application/json
+
+###
+
+### Rota para obter informações meteorológicas simples
+GET http://localhost:5150/api/weatherforecast?location={location_here}&apikey={your_key_here}
+Accept: application/json
+
+###
+
+### Rota para obter informações meteorológicas detalhadas
+GET http://localhost:5150/api/weatherforecast/extended?location={location_here}&apikey={your_key_here}
+Accept: application/json
