@@ -1,22 +1,30 @@
 using Api.Filter;
+using Application.Clients;
 using Infrastructure;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddControllers();
+
+// Configure Serilog for logging
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Debug()
     .WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day)
     .CreateLogger();
 
-
-builder.Services.AddControllers();
-
+// Configure Documentation
 builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// Add Dependency Injection for Application layer
 builder.Services.AddInfrastructure(builder.Configuration);
 
+// Add Clients
+builder.Services.AddHttpClient<GeoServiceClient>();
+
+// Add Exception Filter
 builder.Services.AddMvc(c => c.Filters.Add<AppExceptionFilter>());
 
 var app = builder.Build();
