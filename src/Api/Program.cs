@@ -1,3 +1,4 @@
+using System.Net;
 using Api.Filter;
 using Application;
 using Application.Clients;
@@ -27,8 +28,15 @@ builder.Services.AddApplicationServices();
 
 // Add Clients
 builder.Services.AddHttpClient<GeoServiceClient>();
+builder.Services.AddHttpClient("OpenWeatherClient", client => { }).AddTypedClient(httpClient =>
+    new OpenWeatherClient(httpClient, builder.Configuration["OpenWeatherApiKey"]!)).ConfigurePrimaryHttpMessageHandler(() =>
+{
+    return new HttpClientHandler()
+    {
+        ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => true
+    };
+});
 
-// Add Exception Filter
 builder.Services.AddMvc(c => c.Filters.Add<AppExceptionFilter>());
 
 var app = builder.Build();

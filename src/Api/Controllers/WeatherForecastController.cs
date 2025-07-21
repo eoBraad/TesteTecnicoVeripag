@@ -10,7 +10,7 @@ public class WeatherForecastController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> Get([FromQuery] string location, [FromServices] GetWeatherForecastService service)
     {
-        await service.GetWeatherAsync(location);
-        return Ok();
+        var result = await service.GetWeatherAsync(location, "");
+        return Ok(result);
     }
 }

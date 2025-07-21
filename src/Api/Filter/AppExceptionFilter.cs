@@ -36,6 +36,8 @@ public class AppExceptionFilter(ILogger<AppExceptionFilter> logger) : IException
     private void ThrowUnknowError(ExceptionContext context)
     {
         var errorResponse = new ResponseErrorJson(["An unexpected error occurred. Please try again later."]);
+        
+        _logger.LogError($"An unexpected error occurred: {context.Exception.Message} at {context.HttpContext.Request.Path}");
 
         context.HttpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
         context.Result = new ObjectResult(errorResponse);

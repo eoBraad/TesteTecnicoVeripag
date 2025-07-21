@@ -2,5 +2,5 @@
 
 public interface ISearchHistoryRepository
 {
-    void CreateSearchHistoryAsync(string searchTerm, string result, string apiKey);
+    Task CreateSearchHistoryAsync(string searchTerm, string result, string apiKey);
 }
