@@ -66,7 +66,7 @@ public class GetWeatherForecastExtendedService(
         }
         
         await _cachingRepository.CreateCachedResultAsync(
-            $"weather_extended_{location.ToLowerInvariant()}",
+            location.ToLowerInvariant(),
             JsonSerializer.Serialize(response),
             SearchTypes.Extended
         );

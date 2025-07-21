@@ -3,6 +3,7 @@ using Api.Filter;
 using Application;
 using Application.Clients;
 using Infrastructure;
+using Infrastructure.BackgroundServices;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -36,6 +37,9 @@ builder.Services.AddHttpClient("OpenWeatherClient", client => { }).AddTypedClien
         ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => true
     };
 });
+
+// Add Background Services
+builder.Services.AddHostedService<CleanupCacheService>();
 
 builder.Services.AddMvc(c => c.Filters.Add<AppExceptionFilter>());
 
