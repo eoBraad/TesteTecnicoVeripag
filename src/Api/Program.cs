@@ -1,5 +1,6 @@
 using System.Net;
 using Api.Filter;
+using Api.Middleware;
 using Application;
 using Application.Clients;
 using Infrastructure;
@@ -24,7 +25,7 @@ builder.Services.AddSwaggerGen();
 
 // Add Dependency Injection for Application layer
 builder.Services.AddInfrastructure(builder.Configuration);
-builder.Services.AddApplicationServices();
+builder.Services.AddApplicationServices(builder.Configuration);
 
 // Add Clients
 builder.Services.AddHttpClient<GeoServiceClient>();
@@ -50,6 +51,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseWhen(context => context.Request.Path.StartsWithSegments("/api/weatherforecast"), branch =>
+{
+    branch.UseMiddleware<ApiKeyMiddleware>();
+});
 
 app.UseHttpsRedirection();
 

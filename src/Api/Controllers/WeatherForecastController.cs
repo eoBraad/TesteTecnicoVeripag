@@ -14,9 +14,9 @@ public class WeatherForecastController : ControllerBase
     [ProducesResponseType(typeof(OpenWeatherSimpleResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> Get([FromQuery] string location, [FromServices] GetWeatherForecastService service)
+    public async Task<IActionResult> Get([FromQuery] string location, [FromQuery] string apikey,[FromServices] GetWeatherForecastService service)
     {
-        var result = await service.GetWeatherAsync(location, "");
+        var result = await service.GetWeatherAsync(location, apikey);
         return Ok(result);
     }
     
@@ -24,9 +24,9 @@ public class WeatherForecastController : ControllerBase
     [ProducesResponseType(typeof(OpenWeatherExtendedResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetExtended([FromQuery] string location, [FromServices] GetWeatherForecastExtendedService service)
+    public async Task<IActionResult> GetExtended([FromQuery] string location, [FromQuery] string apikey,[FromServices] GetWeatherForecastExtendedService service)
     {
-        var result = await service.GetWeatherAsync(location, "");
+        var result = await service.GetWeatherAsync(location, apikey);
         return Ok(result);
     }
 }
