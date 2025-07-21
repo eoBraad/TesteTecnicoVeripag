@@ -29,6 +29,7 @@ public class GetWeatherForecastExtendedService(
 
         if (cachedResult != null)
         {
+            await _searchHistoryRepository.CreateSearchHistoryAsync(location, cachedResult!, apiKey);
             return JsonSerializer.Deserialize<OpenWeatherExtendedResponse>(cachedResult)!;
         }
         

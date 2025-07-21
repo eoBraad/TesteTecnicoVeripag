@@ -27,6 +27,7 @@ public class GetWeatherForecastService(
 
         if (cachedResponse != null)
         {
+            await _searchHistoryRepository.CreateSearchHistoryAsync(location, cachedResponse!, apiKey);
             return JsonSerializer.Deserialize<OpenWeatherSimpleResponse>(cachedResponse)!;
         }
 

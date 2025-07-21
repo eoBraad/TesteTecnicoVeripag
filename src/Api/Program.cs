@@ -57,6 +57,11 @@ app.UseWhen(context => context.Request.Path.StartsWithSegments("/api/weatherfore
     branch.UseMiddleware<ApiKeyMiddleware>();
 });
 
+app.UseWhen(context => context.Request.Path.StartsWithSegments("/api/searchhistory"), branch =>
+{
+    branch.UseMiddleware<ApiKeyMiddleware>();
+});
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

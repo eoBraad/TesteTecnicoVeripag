@@ -11,5 +11,6 @@ public static class DependencyInjection
         services.AddScoped<GetWeatherForecastService>();
         services.AddScoped<GetWeatherForecastExtendedService>();
         services.AddScoped<CreateApiKeyService>();
+        services.AddScoped<GetSearchHistoryService>();
     }
 }
