@@ -1,10 +1,13 @@
 using Api.Filter;
+using Application;
 using Application.Clients;
 using Infrastructure;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Configure lowercase Routes
+builder.Services.AddRouting(r => r.LowercaseUrls = true);
 builder.Services.AddControllers();
 
 // Configure Serilog for logging
@@ -20,6 +23,7 @@ builder.Services.AddSwaggerGen();
 
 // Add Dependency Injection for Application layer
 builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddApplicationServices();
 
 // Add Clients
 builder.Services.AddHttpClient<GeoServiceClient>();

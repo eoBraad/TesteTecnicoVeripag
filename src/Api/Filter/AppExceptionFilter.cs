@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace Api.Filter;
 
-public abstract class AppExceptionFilter(ILogger<AppExceptionFilter> logger) : IExceptionFilter
+public class AppExceptionFilter(ILogger<AppExceptionFilter> logger) : IExceptionFilter
 {
     private readonly ILogger<AppExceptionFilter> _logger = logger;
     public void OnException(ExceptionContext context)
