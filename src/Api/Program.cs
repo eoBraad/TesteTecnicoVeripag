@@ -14,7 +14,6 @@ builder.Services.AddControllers();
 
 // Configure Serilog for logging
 Log.Logger = new LoggerConfiguration()
-    .MinimumLevel.Debug()
     .WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day)
     .CreateLogger();
 
