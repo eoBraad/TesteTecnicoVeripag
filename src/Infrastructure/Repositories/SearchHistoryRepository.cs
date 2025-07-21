@@ -1,5 +1,7 @@
-﻿using Domain.Repositories;
+﻿using Domain.Entity;
+using Domain.Repositories;
 using Infrastructure.Database;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories;
 
@@ -18,5 +20,11 @@ public class SearchHistoryRepository(AppDbContext context) : ISearchHistoryRepos
 
         await _context.SearchHistories.AddAsync(searchHistory);
         await _context.SaveChangesAsync();
+    }
+
+    public async Task<List<SearchHistory>> GetAllHistoryAsync(string apiKey)
+    {
+        return await context.SearchHistories.AsNoTracking().Where(sh => sh.ApiKey == apiKey)
+            .ToListAsync();
     }
 }

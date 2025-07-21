@@ -1,5 +1,7 @@
-﻿using Application.Clients;
+﻿using System.Text.Json;
+using Application.Clients;
 using Application.Dtos.Responses;
+using Domain;
 using Domain.Exceptions;
 using Domain.Repositories;
 
@@ -8,17 +10,26 @@ namespace Application.Services;
 public class GetWeatherForecastExtendedService(
     GeoServiceClient geoServiceClient,
     OpenWeatherClient openWeatherClient,
-    ISearchHistoryRepository repository)
+    ISearchHistoryRepository repository,
+    ICachingRepository cachingRepository)
 {
     private readonly GeoServiceClient _geoServiceClient = geoServiceClient;
     private readonly OpenWeatherClient _openWeatherClient = openWeatherClient;
     private readonly ISearchHistoryRepository _searchHistoryRepository = repository;
+    private readonly ICachingRepository _cachingRepository = cachingRepository;
     
     public async Task<OpenWeatherExtendedResponse> GetWeatherAsync(string location, string apiKey)
     {
         if (location == null)
         {
             throw new AppValidationException(["Location cannot be null"]);
+        }
+        
+        var cachedResult = await _cachingRepository.GetCachedResultAsync(location, SearchTypes.Extended);
+
+        if (cachedResult != null)
+        {
+            return JsonSerializer.Deserialize<OpenWeatherExtendedResponse>(cachedResult)!;
         }
         
         var result = await _geoServiceClient.GetGeoDataAsync(location);
@@ -53,6 +64,12 @@ public class GetWeatherForecastExtendedService(
                 Temp = weather.Daily[i].Temp.Day
             });
         }
+        
+        await _cachingRepository.CreateCachedResultAsync(
+            $"weather_extended_{location.ToLowerInvariant()}",
+            JsonSerializer.Serialize(response),
+            SearchTypes.Extended
+        );
         
         return response;
     }
