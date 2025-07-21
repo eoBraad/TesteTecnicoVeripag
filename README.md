@@ -12,6 +12,18 @@ Esta aplicação fornece informações meteorológicas e histórico de buscas ut
 - **Docker** (containerização): Facilita a configuração e o compartilhamento do projeto
 - **Entity Framework**: ORM de alto nivel, facilitando o acesso aos dados e tratamento dos mesmos, contem diversas camadas de conversão de dados permitindo com que você trabalhe com fluides e velocidade.
 
+## Notas de desenvolvimento
+
+Este projeto foi desenvolvido seguindo os princípios da Arquitetura Limpa e aplicando conceitos essenciais do SOLID, visando garantir um código de fácil manutenção e entendimento.
+
+Para facilitar o uso e a execução, a aplicação está configurada com Docker, incluindo um container para o SQL Server, tornando o ambiente de desenvolvimento e testes mais simples e portátil.
+
+A documentação da API é disponibilizada via Swagger, e complementada com um arquivo Api.http que permite uma visão rápida e prática de todas as rotas disponíveis, facilitando o consumo e os testes da API.
+
+No gerenciamento do banco de dados, utilizamos o Entity Framework Core com Migrations, o que auxilia na evolução estruturada do banco e proporciona melhor compreensão do modelo de dados para novos desenvolvedores ou durante alterações no esquema.
+
+Todas as decisões técnicas e arquiteturais foram tomadas com o objetivo de promover um desenvolvimento de alta qualidade e tornar a aplicação mais prática para manutenção e evolução futura.
+
 ## Coverage
 
 ![Teste Covarage Result](test-coverage.png)
