@@ -28,8 +28,8 @@ builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplicationServices(builder.Configuration);
 
 // Add Clients
-builder.Services.AddHttpClient<GeoServiceClient>();
-builder.Services.AddHttpClient("OpenWeatherClient", client => { }).AddTypedClient(httpClient =>
+builder.Services.AddHttpClient<IGeoServiceClient, GeoServiceClient>();
+builder.Services.AddHttpClient<IOpenWeatherClient>("OpenWeatherClient", client => { }).AddTypedClient(httpClient =>
     new OpenWeatherClient(httpClient, builder.Configuration["OpenWeatherApiKey"]!)).ConfigurePrimaryHttpMessageHandler(() =>
 {
     return new HttpClientHandler()

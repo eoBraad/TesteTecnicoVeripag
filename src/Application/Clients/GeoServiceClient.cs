@@ -3,10 +3,15 @@ using Application.Dtos.Results;
 
 namespace Application.Clients;
 
-public class GeoServiceClient()
+public interface IGeoServiceClient
+{
+    Task<GeoResult?> GetGeoDataAsync(string searchTerm);
+}
+
+public class GeoServiceClient: IGeoServiceClient
 {
     private readonly HttpClient _httpClient;
-    public GeoServiceClient(HttpClient httpClient) : this()
+    public GeoServiceClient(HttpClient httpClient)
     {
         _httpClient = httpClient;
         _httpClient.DefaultRequestHeaders.Add("User-Agent", "GeoApiApp");

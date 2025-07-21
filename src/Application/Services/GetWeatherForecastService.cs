@@ -8,13 +8,13 @@ using Domain.Repositories;
 namespace Application.Services;
 
 public class GetWeatherForecastService(
-    GeoServiceClient geoServiceClient,
-    OpenWeatherClient openWeatherClient,
+    IGeoServiceClient geoServiceClient,
+    IOpenWeatherClient openWeatherClient,
     ISearchHistoryRepository repository,
     ICachingRepository cachingRepository)
 {
-    private readonly GeoServiceClient _geoServiceClient = geoServiceClient;
-    private readonly OpenWeatherClient _openWeatherClient = openWeatherClient;
+    private readonly IGeoServiceClient _geoServiceClient = geoServiceClient;
+    private readonly IOpenWeatherClient _openWeatherClient = openWeatherClient;
     private readonly ISearchHistoryRepository _searchHistoryRepository = repository;
     private readonly ICachingRepository _cachingRepository = cachingRepository;
 

@@ -4,7 +4,13 @@ using Application.Dtos.Results;
 
 namespace Application.Clients;
 
-public class OpenWeatherClient(HttpClient httpClient, string apiKey)
+public interface IOpenWeatherClient
+{
+    Task<WeatherSimpleResult?> GetWeatherAsync(float lat, float lon, string exclude = "minutely");
+    Task<WeatherExtendedResult?> GetWeatherExtendedAsync(float lat, float lon, string exclude = "minutely");
+}
+
+public class OpenWeatherClient(HttpClient httpClient, string apiKey) : IOpenWeatherClient
 {
     private readonly HttpClient _httpClient = httpClient;
     private readonly string _apiKey = apiKey;
