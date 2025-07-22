@@ -18,6 +18,8 @@ Log.Logger = new LoggerConfiguration()
     .WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day)
     .CreateLogger();
 
+builder.Host.UseSerilog();
+
 // Configure Documentation
 builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
